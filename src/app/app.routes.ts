@@ -15,6 +15,11 @@ export const routes: Routes = [
     path: 'weather',
     children: [
       {
+        path: '',
+        loadComponent: () =>
+          import('./weather/weather.component').then((r) => r.WeatherComponent),
+      },
+      {
         path: ':id',
         loadComponent: () =>
           import('./weather/weather.component').then((r) => r.WeatherComponent),
