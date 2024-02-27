@@ -11,4 +11,19 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./home/home.component').then((r) => r.HomeComponent),
   },
+  {
+    path: 'weather',
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./weather/weather.component').then((r) => r.WeatherComponent),
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('./weather/weather.component').then((r) => r.WeatherComponent),
+      },
+    ],
+  },
 ];
