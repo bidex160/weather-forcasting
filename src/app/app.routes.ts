@@ -11,4 +11,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./home/home.component').then((r) => r.HomeComponent),
   },
+  {
+    path: 'weather',
+    children: [
+      {
+        path: ':d',
+        loadComponent: () =>
+          import('./weather/weather.component').then((r) => r.WeatherComponent),
+      },
+    ],
+  },
 ];
