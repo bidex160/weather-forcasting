@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, map, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,11 @@ export class NetworkService {
    * @returns observable
    */
   makeGetRequest(url: string) {
-    return this.httpClient.get(url);
+    return this.httpClient.get(url).pipe(
+      map((r) => r),
+      catchError((er: HttpErrorResponse) => {
+        return throwError(() => er);
+      })
+    );
   }
 }

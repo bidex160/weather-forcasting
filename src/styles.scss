@@ -2,3 +2,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.cdk-overlay-pane {
+  position: absolute !important;
+  bottom: 10px !important;
+}
+.cdk-global-overlay-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
