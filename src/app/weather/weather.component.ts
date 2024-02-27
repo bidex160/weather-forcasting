@@ -4,6 +4,7 @@ import { ComponentsModule } from '../components/components.module';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WeatherService } from '../services/weather.service';
 import { IChart } from '../components/index.model';
+import { UtilService } from '../services/utils.service';
 
 @Component({
   selector: 'app-weather',
@@ -24,6 +25,7 @@ export class WeatherComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private weatherSer: WeatherService,
+    private utilSer: UtilService,
     private router: Router
   ) {}
   ngOnInit(): void {
@@ -36,6 +38,7 @@ export class WeatherComponent implements OnInit {
    * navigate back to home screen
    */
   goBack() {
+    this.utilSer.openSnackBar('Forcast option not found');
     this.router.navigate(['/']);
   }
 
@@ -54,7 +57,7 @@ export class WeatherComponent implements OnInit {
       },
       error: (err) => {
         this.isloading = false;
-        console.log(err);
+        this.utilSer.openSnackBar(err?.detail || 'Please try again');
       },
     });
   }

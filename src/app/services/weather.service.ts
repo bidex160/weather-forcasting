@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NetworkService } from './network.service';
-import { map } from 'rxjs';
+import { catchError, map, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +16,14 @@ export class WeatherService {
    */
   fetchForecast(id: string) {
     let url = `https://api.weather.gov/gridpoints/${id}/31,80/forecast`;
-    return this.networkSer
-      .makeGetRequest(url)
-      .pipe(map((res: any) => res?.properties?.periods || []));
+    return this.networkSer.makeGetRequest(url).pipe(
+      map((res: any) => {
+        console.log(res);
+        return res?.properties?.periods || [];
+      }),
+      catchError((er: HttpErrorResponse) => {
+        return throwError(() => er.error);
+      })
+    );
   }
 }
